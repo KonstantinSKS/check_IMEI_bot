@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 class TelegramConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'telegram'
-    verbose_name = 'админ панель'
+    name = 'admin_panel.telegram'
+    verbose_name = 'список пользователей Telegram'

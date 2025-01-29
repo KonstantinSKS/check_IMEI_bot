@@ -1,11 +1,10 @@
-from typing import List
-
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
-def send_contact():
-    """Клавиатура для отправки номера телефона"""
-    keyboard = ReplyKeyboardBuilder()
-    keyboard.button(text="Отправить контакт", request_contact=True)
-    return keyboard.adjust(1).as_markup(resize_keyboard=True)
+def imei_keyboard():
+    """Reply-клавиша для отправки IMEI."""
+
+    return ReplyKeyboardMarkup(
+        keyboard=[[KeyboardButton(text="Отправить IMEI")]],
+        resize_keyboard=True,
+    )

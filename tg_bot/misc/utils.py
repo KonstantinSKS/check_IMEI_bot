@@ -50,7 +50,7 @@ async def get_service_list(text: str):
                 service for service in services
                 if (
                     service.get("price") == "0.00" and
-                    service.get("title") == "Mock service with only unsuccessful results")
+                    service.get("title") == "Mock service with only successful results")
             ]
             return [service["id"] for service in free_services]
 
@@ -64,16 +64,13 @@ async def check_imei(imei: str, token: str):
     """Выполняет запрос к imeicheck.net для проверки IMEI
     и предоставляет информацию о IMEI."""
 
-    # if not validate_imei(imei):
-    #     return "Ошибка: Некорректный IMEI. Убедитесь, что введено 15 цифр."
-
     service_ids = await get_service_list(token)
     if not service_ids:
         return (
             "Для данного API-токена нет доступных бесплатных сервисов. "
             "Попробуйте ввести другой API-токен.")
 
-    service_id = service_ids[0]
+    service_id = service_ids[-1]
 
     async with httpx.AsyncClient() as client:
         try:

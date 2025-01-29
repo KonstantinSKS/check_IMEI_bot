@@ -1,10 +1,14 @@
-from datetime import date, timedelta
-
 from aiogram.types.user import User
 from asgiref.sync import sync_to_async
-from django.utils import timezone
 
 from admin_panel.telegram.models import TgUser
+
+
+@sync_to_async
+def get_tg_user(user_id):
+    """Возвращает экземпляр требуемого пользователя по id."""
+
+    return TgUser.objects.filter(id=user_id).first()
 
 
 @sync_to_async()
@@ -14,15 +18,20 @@ def tg_user_exists(tg_user_id: int) -> bool:
     return TgUser.objects.filter(id=tg_user_id).exists()
 
 
+@sync_to_async()
+def update_user_token(tg_user_id: int, token: str):
+    """Обновляет токен пользователя в БД."""
+
+    return TgUser.objects.filter(id=tg_user_id).aupdate(token=token)
+
+
 @sync_to_async
-def create_tg_user(user: User, email: str, enter_full_name: str):
+def create_tg_user(user: User, token: str):
     """Создаёт и возвращает экземпляр пользователя TgUser."""
 
     tg_user = TgUser.objects.create(
         id=user.id,
-        email=email,
-        enter_full_name=enter_full_name,
         username=user.username,
-        full_name=user.full_name
+        token=token
     )
     return tg_user
