@@ -2,11 +2,10 @@ import asyncio
 from aiogram.types import BotCommand
 
 from tg_bot.loader import dp, bot
-# from .config import super_user_name, super_user_pass, logger
+from tg_bot.config import super_user_name, super_user_pass
 from tg_bot.middlewares.blocking import UserMiddleware
 from tg_bot.settings_logger import logger
-
-# from .db.db_commands import create_super_user
+from tg_bot.db.db_commands import create_super_user
 
 
 async def set_commands():
@@ -21,6 +20,8 @@ async def main():
     """Функция запуска бота."""
 
     logger.info('Запуск бота')
+
+    await create_super_user(super_user_name, super_user_pass)
 
     await set_commands()
 

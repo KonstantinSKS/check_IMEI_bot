@@ -1,7 +1,16 @@
 from aiogram.types.user import User
 from asgiref.sync import sync_to_async
+from django.contrib.auth.models import User as Model_User
 
 from admin_panel.telegram.models import TgUser
+
+
+@sync_to_async()
+def create_super_user(username, password):
+    """Автоматическое создание логина и пароля для суперпользователя."""
+
+    if not Model_User.objects.filter(username=username).exists():
+        Model_User.objects.create_superuser(username, password=password)
 
 
 @sync_to_async
