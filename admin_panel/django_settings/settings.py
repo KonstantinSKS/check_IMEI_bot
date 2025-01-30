@@ -13,8 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY", default=get_random_secret_key())
 
-DEBUG = os.getenv("DEBUG", "True") == "True"
-DOCKER = os.getenv("DOCKER", "False") == "False"
+DEBUG = env.bool("DEBUG", False)
+DOCKER = env.bool("DOCKER", False)
 HOST_IP = env.str('HOST_IP')
 ALLOWED_HOSTS = [HOST_IP, 'localhost', '127.0.0.1',]
 
@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_panel.telegram.apps.TelegramConfig',
-    # 'telegram',
 ]
 
 MIDDLEWARE = [
